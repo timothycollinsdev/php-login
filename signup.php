@@ -56,7 +56,11 @@
                         $pass1 = $_POST["password1"];
                         $pass2= $_POST["password2"];
                           
-                         $eu =  mysql_query("select id from users where uname = '".$uname."'; ");
+                          mysql_real_escape_string($uname);
+                          mysql_real_escape_string($pass1);
+                          mysql_real_escape_string($pass2);
+                          
+                         $eu =  mysql_query("select id from users where uname = '".mysql_real_escape_string($uname)."'; ");
                         $check = mysql_num_rows($eu);
                         if($check == 1){
                             $u= true;
@@ -103,7 +107,7 @@
                           }
                      if(isset($_POST["btn_su"]) == "sign Up" ){
                   if($p == false && $u == false && $em == false){
-                     $cq =   @mysql_query("insert into users(id , uname , upass) values ('' ,'$uname' ,'$pass1' )");
+                     $cq =   @mysql_query("insert into users(id , uname , upass) values ('' ,'".mysql_real_escape_string($uname)."' ,'".mysql_real_escape_string($pass1)."' )");
                       if($cq){
                            echo '<div style="padding-top :10px;" class="alert alert-success fade in">
     <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>

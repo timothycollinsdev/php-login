@@ -41,14 +41,17 @@
              
                <div class="col-xl-8" style="padding-top :8% ; padding-left:20%; padding-right:20%;">
                <?php 
+                    $con =     mysql_connect("localhost" , "root" , "")or die("Unable to connect to database ");
                    if(isset($_POST["btn"]) =="Login" ){
                 $username = $_POST["user"];
                 $password = $_POST["pass"];
+                       mysql_real_escape_string( $username);
+                       mysql_real_escape_string($password);
                    }
                    ?>
                    <form method="post">
                    <h1 >Enter Your Credentials</h1><br>
-                   <input class="form-control" type="text" name="user" placeholder="Username" value="<?php  if(isset($_POST["user"])) echo $username; ?>" /> 
+                   <input class="form-control" type="text" name=" user" placeholder="Username" value="<?php  if(isset($_POST["user"])) echo $username; ?>" /> 
                    <br>
                     <input class="form-control" type="password" name="pass" placeholder="password"  />  
                       <br>
@@ -65,12 +68,12 @@
     <strong>Warning!</strong> Empty Fields!.
 </div>';
                 }else{
-            $con =     mysql_connect("localhost" , "root" , "")or die("Unable to connect to database ");
+           
                
               $db =  mysql_select_db("website" , $con) or die("Unable to select database");
                 
                 
-                $query = " select id from users where uname = '".$username."' and upass = '".$password."' ;";
+                $query = " select id from users where uname = '".mysql_real_escape_string( $username)."' and upass = '".mysql_real_escape_string($password)."' ;";
                
                 $qcheck = mysql_query($query);
                      $r =  mysql_num_rows($qcheck);
